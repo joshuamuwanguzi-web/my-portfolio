@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060B19"/>
+      <stop offset="50%" stop-color="#0B142B"/>
+      <stop offset="100%" stop-color="#111F42"/>
+    </linearGradient>
+    <radialGradient id="sapphireGlow" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.48"/>
+      <stop offset="60%" stop-color="#1E40AF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#060B19" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="silhouetteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#93C5FD"/>
+      <stop offset="40%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <pattern id="techGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#60A5FA" stroke-width="0.6" stroke-opacity="0.14"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="600" fill="url(#bgGrad)"/>
+  <rect width="600" height="600" fill="url(#techGrid)"/>
+  <circle cx="300" cy="250" r="240" fill="url(#sapphireGlow)"/>
+  <circle cx="300" cy="250" r="195" fill="none" stroke="#60A5FA" stroke-opacity="0.22" stroke-width="1.5" stroke-dasharray="6 8"/>
+  <circle cx="300" cy="250" r="155" fill="none" stroke="#93C5FD" stroke-opacity="0.15" stroke-width="1"/>
+  <!-- Stylized Minimalist Engineer Silhouette -->
+  <path d="M145 560 C155 435, 220 390, 300 390 C380 390, 445 435, 455 560 Z" fill="url(#silhouetteGrad)" fill-opacity="0.88" stroke="#BFDBFE" stroke-width="1.5"/>
+  <circle cx="300" cy="245" r="88" fill="url(#silhouetteGrad)" stroke="#E0F2FE" stroke-width="2"/>
+  <!-- Collar & Suit Geometry -->
+  <path d="M250 395 L300 475 L350 395" fill="none" stroke="#F8FAFC" stroke-width="2.5" stroke-opacity="0.7"/>
+</svg>
