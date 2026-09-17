@@ -1,1 +1,2293 @@
+/* ==========================================================================
+   PREMIUM PORTFOLIO TEMPLATE — STRICT MONOCHROMATIC SAPPHIRE & WHITE EDITION
+   File: css/style.css
+   Architecture: Pure HTML5 + CSS3 + Minimal Vanilla JS (Zero Frameworks)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS & EDITABLE COLOR PALETTE
+   [EDIT COLORS HERE]: Modify these CSS custom properties to adjust the
+   entire monochromatic blue and white palette across the website.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Background Obsidian & Navy Surfaces */
+  --bg-primary: #060B19;          /* Deep Obsidian Navy Canvas */
+  --bg-secondary: #0B142B;        /* Midnight Sapphire Surface */
+  --bg-elevated: #111F42;         /* Deep Royal Elevated Surface */
+  --bg-solid-panel: #081024;      /* Solid Contrast Section Background */
+
+  /* Monochromatic Blue Spectrum Accents */
+  --primary-blue: #2563EB;        /* Electric Cobalt Primary Accent */
+  --dark-blue: #1D4ED8;           /* Deep Cobalt Hover Tone */
+  --medium-blue: #3B82F6;         /* Brilliant Sapphire Medium Tone */
+  --soft-blue: #60A5FA;           /* Ice Sapphire Secondary Accent */
+  --light-blue: #93C5FD;          /* Soft Frost Blue Highlight */
+  --pale-blue: #DBEAFE;           /* Pale Ice Blue Tint */
+  --accent-glow: rgba(59, 130, 246, 0.42);
+  --accent-soft-glow: rgba(96, 165, 250, 0.22);
+
+  /* Pure White & Cool Slate Typography Hierarchy */
+  --white: #FFFFFF;
+  --off-white: #F8FAFC;           /* Pure Alabaster White */
+  --text-color: #F8FAFC;
+  --text-secondary: #94A3B8;      /* Cool Slate Blue-White */
+  --text-muted: #64748B;          /* Muted Steel Blue */
+
+  /* Glassmorphism Surface Tokens */
+  --glass-background: rgba(17, 31, 66, 0.54);
+  --glass-background-hover: rgba(23, 43, 92, 0.74);
+  --glass-background-strong: rgba(11, 20, 43, 0.82);
+  --glass-border: rgba(147, 197, 253, 0.16);
+  --glass-border-hover: rgba(147, 197, 253, 0.36);
+  --glass-highlight: rgba(255, 255, 255, 0.09);
+  --glass-shadow: 0 20px 50px -12px rgba(2, 6, 23, 0.72);
+  --glass-shadow-hover: 0 28px 64px -12px rgba(2, 8, 35, 0.85), 0 0 28px -6px rgba(37, 99, 235, 0.28);
+
+  /* Typography Fonts */
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, monospace;
+
+  /* Layout & Spacing */
+  --container-max: 1240px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* Smooth Easing Curves */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.45);
+  color: var(--white);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s var(--ease-in-out), opacity 0.25s var(--ease-in-out);
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Keyboard Focus Accessibility */
+:focus-visible {
+  outline: 2px solid var(--soft-blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1.5rem;
+  z-index: 9999;
+  padding: 0.75rem 1.25rem;
+  background: var(--primary-blue);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: top 0.3s var(--ease-out-expo);
+}
+
+.skip-link:focus {
+  top: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. ATMOSPHERIC BACKGROUND CANVAS (SUBTLE GRADIENTS, ORBS & TECH GRID)
+   -------------------------------------------------------------------------- */
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(29, 78, 216, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(59, 130, 246, 0.13) 0%, transparent 50%),
+    radial-gradient(circle at 50% 85%, rgba(30, 64, 175, 0.14) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 55%, var(--bg-primary) 100%);
+}
+
+/* Subtle 48x48 Blueprint Grid Overlay */
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(147, 197, 253, 0.032) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(147, 197, 253, 0.032) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 35%, transparent 100%);
+}
+
+/* Blurred Floating Sapphire Light Orbs */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.ambient-orb--one {
+  width: 520px;
+  height: 520px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.36) 0%, rgba(11, 20, 43, 0) 70%);
+  animation: orbDriftOne 22s ease-in-out infinite alternate;
+}
+
+.ambient-orb--two {
+  width: 600px;
+  height: 600px;
+  top: 28%;
+  right: -180px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.24) 0%, rgba(11, 20, 43, 0) 70%);
+  animation: orbDriftTwo 26s ease-in-out infinite alternate;
+}
+
+.ambient-orb--three {
+  width: 480px;
+  height: 480px;
+  bottom: -140px;
+  left: 22%;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.28) 0%, rgba(6, 11, 25, 0) 72%);
+  animation: orbDriftOne 28s ease-in-out infinite alternate-reverse;
+}
+
+/* --------------------------------------------------------------------------
+   4. REUSABLE GLASSMORPHISM & LAYOUT PRIMITIVES
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: clamp(5rem, 9vw, 7.75rem) 0;
+  position: relative;
+}
+
+.section--solid-band {
+  background: linear-gradient(180deg, rgba(8, 16, 36, 0.88) 0%, rgba(11, 20, 43, 0.92) 50%, rgba(6, 11, 25, 0.88) 100%);
+  border-top: 1px solid rgba(147, 197, 253, 0.08);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.08);
+}
+
+/* Core Glass Card Recipe */
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 138, 0.32) 0%,
+    rgba(15, 23, 42, 0.62) 100%
+  );
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 0 var(--glass-highlight);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.42s var(--ease-out-expo),
+    background 0.42s var(--ease-out-expo),
+    border-color 0.42s var(--ease-out-expo),
+    box-shadow 0.42s var(--ease-out-expo);
+}
+
+/* Specular Top Highlight Shimmer on Glass Cards */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(191, 219, 254, 0.45) 50%,
+    transparent 100%
+  );
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.34) 0%,
+    rgba(17, 31, 66, 0.76) 100%
+  );
+  border-color: var(--glass-border-hover);
+  box-shadow:
+    var(--glass-shadow-hover),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
+}
+
+/* Section Header Typography */
+.section-header {
+  max-width: 720px;
+  margin-bottom: clamp(3rem, 5vw, 4.25rem);
+}
+
+.section-header--center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: var(--radius-pill);
+  background: rgba(37, 99, 235, 0.14);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  color: var(--light-blue);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.eyebrow-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--soft-blue);
+  box-shadow: 0 0 10px var(--soft-blue);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #FFFFFF 0%, #BFDBFE 45%, #60A5FA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   5. BUTTONS & INTERACTIVE TRIGGERS
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.88rem 1.65rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.32s var(--ease-out-expo),
+    box-shadow 0.32s var(--ease-out-expo),
+    background 0.32s var(--ease-out-expo),
+    border-color 0.32s var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--medium-blue) 0%, var(--primary-blue) 60%, var(--dark-blue) 100%);
+  color: var(--white);
+  border: 1px solid rgba(191, 219, 254, 0.38);
+  box-shadow:
+    0 12px 28px -6px rgba(37, 99, 235, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn--primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, var(--soft-blue) 0%, var(--medium-blue) 55%, var(--primary-blue) 100%);
+  box-shadow:
+    0 18px 36px -6px rgba(59, 130, 246, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.btn--glass {
+  background: rgba(17, 31, 66, 0.58);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--off-white);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.btn--glass:hover {
+  transform: translateY(-3px);
+  background: rgba(30, 58, 138, 0.5);
+  border-color: rgba(147, 197, 253, 0.5);
+  box-shadow: 0 12px 28px -8px rgba(15, 23, 42, 0.75);
+}
+
+.btn--sm {
+  padding: 0.62rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. STICKY GLASSMORPHISM NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 1.15rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 1.5rem;
+  transition: top 0.35s var(--ease-out-expo);
+}
+
+.site-header.is-scrolled {
+  top: 0.65rem;
+}
+
+.nav-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.15rem 0.7rem 1.4rem;
+  border-radius: var(--radius-pill);
+  background: rgba(11, 20, 43, 0.65);
+  backdrop-filter: blur(20px) saturate(165%);
+  -webkit-backdrop-filter: blur(20px) saturate(165%);
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  box-shadow:
+    0 16px 40px -10px rgba(2, 6, 23, 0.68),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition:
+    padding 0.35s var(--ease-out-expo),
+    background 0.35s var(--ease-out-expo),
+    border-color 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo);
+}
+
+.site-header.is-scrolled .nav-shell {
+  padding: 0.55rem 1rem 0.55rem 1.25rem;
+  background: rgba(6, 11, 25, 0.84);
+  border-color: rgba(147, 197, 253, 0.28);
+  box-shadow:
+    0 20px 45px -10px rgba(2, 6, 23, 0.85),
+    0 0 24px -8px rgba(37, 99, 235, 0.35);
+}
+
+/* Brand Logo */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.08rem;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.brand-logo__mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--medium-blue) 0%, var(--dark-blue) 100%);
+  border: 1px solid rgba(191, 219, 254, 0.45);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--white);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
+}
+
+.brand-logo__dot {
+  color: var(--soft-blue);
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  transition: color 0.25s var(--ease-in-out), background 0.25s var(--ease-in-out);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--soft-blue), var(--white));
+  transform: translateX(-50%);
+  transition: width 0.28s var(--ease-out-expo);
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--white);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  width: 18px;
+}
+
+.nav-link.is-active {
+  background: rgba(37, 99, 235, 0.16);
+}
+
+/* Right Nav Actions */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Hamburger Menu Button (Mobile/Tablet) */
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(30, 58, 138, 0.35);
+  border: 1px solid rgba(147, 197, 253, 0.24);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  transition: background 0.25s var(--ease-in-out);
+}
+
+.menu-toggle__bar {
+  width: 18px;
+  height: 2px;
+  background-color: var(--off-white);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   7. HERO SECTION (12-COLUMN ASYMMETRIC SHOWCASE)
+   -------------------------------------------------------------------------- */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8.5rem 0 5rem;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.hero-content {
+  grid-column: span 7;
+}
+
+/* Live Status Pill */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 1.05rem;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 31, 66, 0.68);
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px -6px rgba(2, 6, 23, 0.6);
+  animation: fadeSlideUp 0.7s var(--ease-out-expo) both;
+}
+
+.status-pill__beacon {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--soft-blue);
+}
+
+.status-pill__beacon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--soft-blue);
+  animation: statusPulse 2.2s infinite ease-out;
+}
+
+.status-pill__text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--pale-blue);
+  letter-spacing: 0.04em;
+}
+
+/* Hero Headline */
+.hero-greeting {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--soft-blue);
+  margin-bottom: 0.65rem;
+  animation: fadeSlideUp 0.75s 0.08s var(--ease-out-expo) both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.65rem, 5vw, 4.35rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 1.25rem;
+  animation: fadeSlideUp 0.8s 0.14s var(--ease-out-expo) both;
+}
+
+/* Structured Discipline Tags Bar */
+.hero-disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  animation: fadeSlideUp 0.85s 0.2s var(--ease-out-expo) both;
+}
+
+.discipline-chip {
+  padding: 0.36rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: rgba(30, 58, 138, 0.28);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  color: var(--pale-blue);
+  font-family: var(--font-mono);
+  font-size: 0.79rem;
+  font-weight: 500;
+  transition:
+    background 0.25s var(--ease-in-out),
+    border-color 0.25s var(--ease-in-out),
+    transform 0.25s var(--ease-in-out);
+}
+
+.discipline-chip:hover {
+  background: rgba(37, 99, 235, 0.32);
+  border-color: rgba(147, 197, 253, 0.45);
+  transform: translateY(-2px);
+}
+
+.hero-description {
+  font-size: clamp(1.02rem, 1.2vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 610px;
+  margin-bottom: 2.2rem;
+  line-height: 1.72;
+  animation: fadeSlideUp 0.9s 0.26s var(--ease-out-expo) both;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  animation: fadeSlideUp 0.95s 0.32s var(--ease-out-expo) both;
+}
+
+/* Quick Telemetry Strip under Hero CTAs */
+.hero-QuickSpecs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding-top: 1.65rem;
+  border-top: 1px solid rgba(147, 197, 253, 0.12);
+  animation: fadeSlideUp 1s 0.38s var(--ease-out-expo) both;
+}
+
+.quick-spec__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.quick-spec__value {
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--off-white);
+}
+
+/* Right Column: Architectural Glass Portrait Showcase */
+.hero-visual {
+  grid-column: span 5;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  animation: fadeScaleIn 1s 0.22s var(--ease-out-expo) both;
+}
+
+.portrait-stage {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 4.6;
+  border-radius: var(--radius-xl);
+  padding: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(96, 165, 250, 0.32) 0%,
+    rgba(17, 31, 66, 0.45) 50%,
+    rgba(37, 99, 235, 0.35) 100%
+  );
+  border: 1px solid rgba(191, 219, 254, 0.28);
+  box-shadow:
+    0 30px 70px -15px rgba(2, 6, 23, 0.85),
+    0 0 45px -10px rgba(37, 99, 235, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Animated Outer Glow Ring */
+.portrait-stage::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-xl) + 2px);
+  background: linear-gradient(125deg, rgba(147, 197, 253, 0.55), transparent 40%, rgba(37, 99, 235, 0.55));
+  z-index: -1;
+  opacity: 0.7;
+  animation: borderPulseGlow 5s ease-in-out infinite alternate;
+}
+
+.portrait-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius-xl) - 8px);
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(180deg, #0B142B 0%, #060B19 100%);
+  border: 1px solid rgba(147, 197, 253, 0.16);
+}
+
+/* Monochromatic Blue Sapphire Filter applied to Portrait Image */
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(100%) sepia(38%) hue-rotate(194deg) saturate(165%) contrast(108%) brightness(94%);
+  transition: transform 0.75s var(--ease-out-expo), filter 0.75s var(--ease-out-expo);
+}
+
+.portrait-stage:hover .portrait-image {
+  transform: scale(1.04);
+  filter: grayscale(100%) sepia(32%) hue-rotate(194deg) saturate(145%) contrast(112%) brightness(98%);
+}
+
+/* Subtle Sapphire Vignette Overlay over Portrait */
+.portrait-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6, 11, 25, 0.05) 0%, rgba(6, 11, 25, 0.2) 60%, rgba(6, 11, 25, 0.88) 100%),
+    radial-gradient(circle at 50% 25%, rgba(59, 130, 246, 0.16), transparent 65%);
+  pointer-events: none;
+}
+
+.portrait-caption {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 1.1rem;
+  right: 1.1rem;
+  padding: 0.85rem 1.05rem;
+  border-radius: var(--radius-md);
+  background: rgba(11, 20, 43, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.portrait-caption__name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.portrait-caption__role {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--light-blue);
+}
+
+.portrait-caption__badge {
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--pale-blue);
+}
+
+/* Floating Glass Telemetry Badges on Hero Portrait */
+.floating-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(11, 20, 43, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(147, 197, 253, 0.26);
+  box-shadow: 0 16px 36px -8px rgba(2, 6, 23, 0.75);
+  z-index: 2;
+}
+
+.floating-badge--top {
+  top: 1.5rem;
+  left: -1.75rem;
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.floating-badge--bottom {
+  bottom: 5.5rem;
+  right: -1.5rem;
+  animation: floatSlow 7s 1.2s ease-in-out infinite;
+}
+
+.floating-badge__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(37, 99, 235, 0.24);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  display: grid;
+  place-items: center;
+  color: var(--light-blue);
+}
+
+.floating-badge__title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+}
+
+.floating-badge__sub {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   8. ABOUT ME SECTION (BENTO GRID + STATISTICS CLUSTER)
+   -------------------------------------------------------------------------- */
+.about-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.about-bio-card {
+  grid-column: span 7;
+  padding: clamp(1.85rem, 3.2vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.about-bio-card__lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.6vw, 1.42rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+}
+
+.about-bio-card__text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 1.15rem;
+}
+
+/* Focus Pillars inside Bio Card */
+.about-pillars {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(147, 197, 253, 0.12);
+}
+
+.about-pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.about-pillar__marker {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: rgba(37, 99, 235, 0.22);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  display: grid;
+  place-items: center;
+  color: var(--light-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-pillar__title {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+
+.about-pillar__desc {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Right Side 2x2 Statistics Cluster */
+.about-stats-grid {
+  grid-column: span 5;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.stat-card {
+  padding: 1.65rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stat-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.stat-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--light-blue);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-card__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  display: grid;
+  place-items: center;
+  color: var(--soft-blue);
+}
+
+.stat-card__number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.55rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card__label {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pale-blue);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card__caption {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------------------
+   9. SKILLS SECTION (CATEGORIZED MATRIX + ARCHITECTURAL TIER INDICATORS)
+   -------------------------------------------------------------------------- */
+.skills-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2.75rem;
+}
+
+.skill-tab-btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 31, 66, 0.52);
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.28s var(--ease-out-expo);
+}
+
+.skill-tab-btn:hover,
+.skill-tab-btn.is-active {
+  background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+  color: var(--white);
+  border-color: rgba(191, 219, 254, 0.45);
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.5);
+}
+
+.skills-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.skill-domain-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+}
+
+.skill-domain-column.is-hidden {
+  display: none;
+}
+
+.skill-domain-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.35rem;
+  border-radius: var(--radius-md);
+  background: rgba(11, 20, 43, 0.78);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+}
+
+.skill-domain-header__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.skill-domain-header__badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--light-blue);
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: rgba(37, 99, 235, 0.2);
+}
+
+/* Individual Skill Glass Card */
+.skill-card {
+  padding: 1.35rem 1.4rem;
+}
+
+.skill-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+}
+
+.skill-card__name {
+  font-family: var(--font-display);
+  font-size: 1.04rem;
+  font-weight: 700;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.skill-card__code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--soft-blue);
+  padding: 0.18rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.16);
+  border: 1px solid rgba(96, 165, 250, 0.22);
+}
+
+.skill-card__desc {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  line-height: 1.58;
+  margin-bottom: 1.1rem;
+}
+
+/* CSS-Based 4-Node Architectural Tier Indicator (No Artificial Percentages) */
+.skill-card__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(147, 197, 253, 0.1);
+}
+
+.tier-nodes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tier-node {
+  width: 24px;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.18);
+  border: 1px solid rgba(147, 197, 253, 0.14);
+  transition: background 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo);
+}
+
+.tier-node.is-filled {
+  background: linear-gradient(90deg, var(--primary-blue), var(--soft-blue));
+  border-color: rgba(191, 219, 254, 0.45);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.45);
+}
+
+.skill-card:hover .tier-node.is-filled {
+  background: linear-gradient(90deg, var(--soft-blue), var(--white));
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.75);
+}
+
+.tier-label {
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  color: var(--light-blue);
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   10. PROJECTS SECTION (FILTERABLE SHOWCASE + BLUEPRINT PREVIEWS)
+   -------------------------------------------------------------------------- */
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2.75rem;
+}
+
+.project-filter-btn {
+  padding: 0.58rem 1.2rem;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 31, 66, 0.52);
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.87rem;
+  font-weight: 600;
+  transition: all 0.28s var(--ease-out-expo);
+}
+
+.project-filter-btn:hover,
+.project-filter-btn.is-active {
+  background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+  color: var(--white);
+  border-color: rgba(191, 219, 254, 0.45);
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.5);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition:
+    transform 0.45s var(--ease-out-expo),
+    box-shadow 0.45s var(--ease-out-expo),
+    border-color 0.45s var(--ease-out-expo);
+}
+
+.project-card.is-hidden {
+  display: none;
+}
+
+/* 16:10 Architectural Visual Preview Header */
+.project-visual {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(145deg, #09132C 0%, #0D1D42 55%, #070F24 100%);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.15);
+  overflow: hidden;
+  padding: 0.85rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Window Chrome Bar (Monochromatic Sapphire Dots) */
+.project-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.project-chrome__dots {
+  display: flex;
+  gap: 5px;
+}
+
+.project-chrome__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(147, 197, 253, 0.35);
+}
+
+.project-chrome__dot:first-child {
+  background: var(--soft-blue);
+}
+
+.project-chrome__id {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--light-blue);
+  opacity: 0.85;
+}
+
+/* Zooming Blueprint Graphic on Card Hover */
+.project-blueprint {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.project-card:hover .project-blueprint {
+  transform: scale(1.07);
+}
+
+/* Hover Reveal Drawer Overlay inside Project Visual */
+.project-hover-reveal {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 11, 25, 0.25) 0%,
+    rgba(11, 20, 43, 0.94) 100%
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.15rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.38s var(--ease-out-expo),
+    transform 0.38s var(--ease-out-expo);
+  z-index: 3;
+}
+
+.project-card:hover .project-hover-reveal,
+.project-card:focus-within .project-hover-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-hover-reveal__note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--pale-blue);
+  line-height: 1.5;
+}
+
+/* Project Body Content */
+.project-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+}
+
+.project-category-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--soft-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.project-status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.62;
+  margin-bottom: 1.15rem;
+}
+
+.project-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  margin-bottom: 1.35rem;
+}
+
+.tech-tag {
+  padding: 0.25rem 0.62rem;
+  border-radius: 6px;
+  background: rgba(30, 58, 138, 0.28);
+  border: 1px solid rgba(147, 197, 253, 0.16);
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  color: var(--pale-blue);
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(147, 197, 253, 0.12);
+}
+
+.project-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all 0.28s var(--ease-out-expo);
+}
+
+.project-btn--primary {
+  background: rgba(37, 99, 235, 0.26);
+  border: 1px solid rgba(96, 165, 250, 0.36);
+  color: var(--white);
+}
+
+.project-btn--primary:hover {
+  background: var(--primary-blue);
+  border-color: var(--light-blue);
+  box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.55);
+}
+
+.project-btn--secondary {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(147, 197, 253, 0.16);
+  color: var(--text-secondary);
+}
+
+.project-btn--secondary:hover {
+  color: var(--white);
+  border-color: rgba(147, 197, 253, 0.38);
+  background: rgba(30, 58, 138, 0.32);
+}
+
+/* --------------------------------------------------------------------------
+   11. SERVICES SECTION (CLIENT SOLUTIONS GLASS CARDS)
+   -------------------------------------------------------------------------- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.65rem;
+}
+
+.service-card {
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.service-card__icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.28) 0%, rgba(17, 31, 66, 0.65) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  display: grid;
+  place-items: center;
+  color: var(--light-blue);
+  margin-bottom: 1.35rem;
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.35);
+  transition: transform 0.35s var(--ease-out-expo), background 0.35s var(--ease-out-expo);
+}
+
+.service-card:hover .service-card__icon-box {
+  transform: scale(1.08) rotate(-3deg);
+  background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+  color: var(--white);
+}
+
+.service-card__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.65rem;
+}
+
+.service-card__desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.35rem;
+}
+
+.service-deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(147, 197, 253, 0.1);
+}
+
+.service-deliverables li {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--pale-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-deliverables li::before {
+  content: '▹';
+  color: var(--soft-blue);
+}
+
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--light-blue);
+  transition: color 0.25s var(--ease-in-out), gap 0.25s var(--ease-in-out);
+}
+
+.service-card__cta:hover {
+  color: var(--white);
+  gap: 0.7rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. EDUCATION & LEARNING JOURNEY TIMELINE
+   -------------------------------------------------------------------------- */
+.timeline-wrapper {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+/* Central Vertical Conduit Line */
+.timeline-conduit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--primary-blue) 12%,
+    var(--soft-blue) 50%,
+    var(--primary-blue) 88%,
+    transparent 100%
+  );
+  opacity: 0.55;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-item:nth-child(odd) .timeline-card {
+  grid-column: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-spacer {
+  grid-column: 3;
+}
+
+.timeline-item:nth-child(even) .timeline-spacer {
+  grid-column: 1;
+}
+
+.timeline-item:nth-child(even) .timeline-card {
+  grid-column: 3;
+}
+
+.timeline-node {
+  grid-column: 2;
+  justify-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--soft-blue);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.55);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  z-index: 2;
+  transition: transform 0.35s var(--ease-out-expo), background 0.35s var(--ease-out-expo);
+}
+
+.timeline-item:hover .timeline-node {
+  transform: scale(1.15);
+  background: var(--primary-blue);
+}
+
+.timeline-card {
+  padding: 1.65rem 1.75rem;
+}
+
+.timeline-card__phase {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  color: var(--soft-blue);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.timeline-card__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-card__desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.62;
+  margin-bottom: 0.95rem;
+}
+
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. CONTACT SECTION & EXTERNAL WEBSITE GATEWAY
+   -------------------------------------------------------------------------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.contact-sidebar {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-info-card {
+  padding: 2rem;
+}
+
+.contact-info-card__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+
+.contact-info-card__sub {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.contact-channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.65rem;
+}
+
+.contact-channel {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(11, 20, 43, 0.55);
+  border: 1px solid rgba(147, 197, 253, 0.14);
+  transition: border-color 0.25s var(--ease-in-out), transform 0.25s var(--ease-in-out);
+}
+
+.contact-channel:hover {
+  border-color: rgba(147, 197, 253, 0.38);
+  transform: translateX(4px);
+}
+
+.contact-channel__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  display: grid;
+  place-items: center;
+  color: var(--light-blue);
+  flex-shrink: 0;
+}
+
+.contact-channel__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+}
+
+.contact-channel__value {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* Social Links Row */
+.social-links-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.social-pill {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(17, 31, 66, 0.65);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  display: grid;
+  place-items: center;
+  color: var(--pale-blue);
+  transition: all 0.28s var(--ease-out-expo);
+}
+
+.social-pill:hover {
+  background: var(--primary-blue);
+  color: var(--white);
+  border-color: var(--light-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.55);
+}
+
+/* Dedicated External Website Showcase Card */
+.external-portal-card {
+  padding: 1.85rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.28) 0%,
+    rgba(11, 20, 43, 0.85) 100%
+  );
+  border: 1px solid rgba(96, 165, 250, 0.35);
+}
+
+.external-portal-card__badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--light-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.external-portal-card__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.external-portal-card__desc {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+/* Contact Form Glass Panel */
+.contact-form-card {
+  grid-column: span 7;
+  padding: clamp(1.85rem, 3.5vw, 2.75rem);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-group--full {
+  grid-column: span 2;
+}
+
+.form-label {
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--pale-blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label__req {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--soft-blue);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: rgba(6, 11, 25, 0.65);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  color: var(--white);
+  font-size: 0.95rem;
+  transition:
+    border-color 0.28s var(--ease-out-expo),
+    box-shadow 0.28s var(--ease-out-expo),
+    background 0.28s var(--ease-out-expo);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-control:hover {
+  border-color: rgba(147, 197, 253, 0.35);
+}
+
+.form-control:focus {
+  outline: none;
+  background: rgba(11, 20, 43, 0.88);
+  border-color: var(--soft-blue);
+  box-shadow:
+    0 0 0 4px rgba(59, 130, 246, 0.22),
+    0 8px 20px -4px rgba(2, 6, 23, 0.6);
+}
+
+/* Monochromatic Validation States */
+.form-control.is-invalid {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.28);
+}
+
+textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-feedback {
+  margin-top: 1rem;
+  padding: 0.9rem 1.15rem;
+  border-radius: var(--radius-md);
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.38);
+  color: var(--pale-blue);
+  font-size: 0.88rem;
+  display: none;
+}
+
+.form-feedback.is-visible {
+  display: block;
+  animation: fadeSlideUp 0.35s var(--ease-out-expo) both;
+}
+
+.form-notice {
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.05rem;
+  border-radius: var(--radius-sm);
+  background: rgba(11, 20, 43, 0.65);
+  border: 1px solid rgba(147, 197, 253, 0.14);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   14. PROJECT ARCHITECTURAL SPECIFICATION MODAL (PURE MONOCHROME GLASS)
+   -------------------------------------------------------------------------- */
+.spec-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(6, 11, 25, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s var(--ease-out-expo);
+}
+
+.spec-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spec-modal {
+  width: 100%;
+  max-width: 660px;
+  padding: 2.25rem;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(145deg, rgba(17, 31, 66, 0.94) 0%, rgba(6, 11, 25, 0.96) 100%);
+  border: 1px solid rgba(147, 197, 253, 0.32);
+  box-shadow: 0 32px 80px -12px rgba(2, 6, 23, 0.95);
+  transform: translateY(18px) scale(0.97);
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.spec-modal-backdrop.is-open .spec-modal {
+  transform: translateY(0) scale(1);
+}
+
+.spec-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.spec-modal__close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(30, 58, 138, 0.35);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+}
+
+.spec-modal__close:hover {
+  background: var(--primary-blue);
+}
+
+/* --------------------------------------------------------------------------
+   15. FOOTER
+   -------------------------------------------------------------------------- */
+.site-footer {
+  padding: 4rem 0 2.5rem;
+  background: rgba(6, 11, 25, 0.92);
+  border-top: 1px solid rgba(147, 197, 253, 0.14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  gap: 2.5rem;
+  padding-bottom: 2.75rem;
+  border-bottom: 1px solid rgba(147, 197, 253, 0.1);
+}
+
+.footer-brand__desc {
+  margin-top: 0.85rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  max-width: 340px;
+}
+
+.footer-col__title {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-links a {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.footer-links a:hover {
+  color: var(--soft-blue);
+}
+
+.footer-bottom {
+  padding-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   16. SCROLL REVEAL & KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes statusPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.85;
+  }
+  75%, 100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes borderPulseGlow {
+  0% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes orbDriftOne {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(45px, 35px) scale(1.08);
+  }
+}
+
+@keyframes orbDriftTwo {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-50px, -30px) scale(1.06);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   17. RESPONSIVE DESIGN BREAKPOINTS (DESKTOP, TABLET, MOBILE)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .hero-content {
+    grid-column: span 12;
+  }
+  .hero-visual {
+    grid-column: span 12;
+    margin-top: 1rem;
+  }
+  .about-bio-card,
+  .about-stats-grid {
+    grid-column: span 12;
+  }
+  .skills-category-grid,
+  .projects-grid,
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .contact-sidebar,
+  .contact-form-card {
+    grid-column: span 12;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 1.5rem;
+    right: 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.15rem;
+    border-radius: var(--radius-lg);
+    background: rgba(6, 11, 25, 0.95);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(147, 197, 253, 0.25);
+    box-shadow: 0 24px 48px -12px rgba(2, 6, 23, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: all 0.3s var(--ease-out-expo);
+  }
+
+  .nav-links.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-link {
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-actions .btn--sm {
+    display: none;
+  }
+
+  /* Single Column Timeline on Tablet/Mobile */
+  .timeline-conduit {
+    left: 20px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 44px 1fr;
+    gap: 1rem;
+  }
+
+  .timeline-node {
+    grid-column: 1;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-card,
+  .timeline-item:nth-child(even) .timeline-card {
+    grid-column: 2;
+  }
+
+  .timeline-spacer {
+    display: none;
+  }
+
+  .floating-badge--top {
+    left: 0.5rem;
+  }
+
+  .floating-badge--bottom {
+    right: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .skills-category-grid,
+  .projects-grid,
+  .services-grid,
+  .about-stats-grid,
+  .about-pillars,
+  .form-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group--full {
+    grid-column: span 1;
+  }
+
+  .hero-QuickSpecs {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. REDUCED MOTION ACCESSIBILITY SUPPORT
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
